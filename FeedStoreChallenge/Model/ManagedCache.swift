@@ -13,4 +13,8 @@ extension ManagedCache {
 
 		return try context.fetch(request).first
 	}
+
+	var localFeed: [LocalFeedImage] {
+		return feed.compactMap { ($0 as? ManagedFeedImage)?.local }
+	}
 }
