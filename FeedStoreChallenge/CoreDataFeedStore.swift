@@ -49,9 +49,7 @@ public final class CoreDataFeedStore: FeedStore {
 		let context = self.context
 		context.perform {
 			do {
-				if let cache = try? ManagedCache.find(in: context) {
-					context.delete(cache)
-				}
+				try? ManagedCache.find(in: context).map(context.delete)
 
 				let cache = ManagedCache(context: context)
 				cache.timestamp = timestamp
@@ -68,6 +66,7 @@ public final class CoreDataFeedStore: FeedStore {
 				try context.save()
 				completion(nil)
 			} catch {
+				context.rollback()
 				completion(error)
 			}
 		}
