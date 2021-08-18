@@ -35,7 +35,7 @@ public final class CoreDataFeedStore: FeedStore {
 				if let cache = try ManagedCache.find(in: context) {
 					let localFeed = cache.feed.compactMap { object -> LocalFeedImage? in
 						if let feedImage = (object as? ManagedFeedImage) {
-							return LocalFeedImage(id: feedImage.id, description: feedImage.imageDescription, location: feedImage.location, url: feedImage.url)
+							return feedImage.local
 						} else {
 							return nil
 						}
